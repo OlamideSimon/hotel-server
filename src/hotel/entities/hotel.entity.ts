@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { HotelBrand } from 'src/hotel-brands/entities/hotel-brand.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Hotel {
@@ -16,4 +17,7 @@ export class Hotel {
 
   @Column()
   address: string;
+
+  @ManyToOne(() => HotelBrand, (hotelBrand) => hotelBrand.hotels)
+  hotelBrand: HotelBrand;
 }

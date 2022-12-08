@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Hotel } from 'src/hotel/entities/hotel.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class HotelBrand {
@@ -7,4 +8,7 @@ export class HotelBrand {
 
   @Column()
   name: string;
+
+  @OneToMany(() => Hotel, (hotel) => hotel.hotelBrand)
+  hotels: Hotel[];
 }

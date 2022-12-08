@@ -1,26 +1,50 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateHotelBrandDto } from './dto/create-hotel-brand.dto';
 import { UpdateHotelBrandDto } from './dto/update-hotel-brand.dto';
+import { HotelBrand } from './entities/hotel-brand.entity';
 
 @Injectable()
 export class HotelBrandsService {
-  create(createHotelBrandDto: CreateHotelBrandDto) {
-    return 'This action adds a new hotelBrand';
+  constructor(
+    @InjectRepository(HotelBrand)
+    private readonly hotelBrandRepository: Repository<HotelBrand>,
+  ) {}
+
+  async create(createHotelBrandDto: CreateHotelBrandDto) {
+    const hotelBrand = await this.hotelBrandRepository.create(
+      createHotelBrandDto,
+    );
+    return this.hotelBrandRepository.save(hotelBrand);
   }
 
   findAll() {
-    return `This action returns all hotelBrands`;
+    return this.hotelBrandRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} hotelBrand`;
+  async findOne(id: number) {
+    const hotelBrand = await this.hotelBrandRepository.findOneBy({ id });
+
+    if (!hotelBrand)
+      throw new HttpException('Hotel does not exist', HttpStatus.NOT_FOUND);
+
+    return hotelBrand;
   }
 
-  update(id: number, updateHotelBrandDto: UpdateHotelBrandDto) {
-    return `This action updates a #${id} hotelBrand`;
+  async update(id: number, updateHotelBrandDto: UpdateHotelBrandDto) {
+    await this.findOne(id);
+
+    const hotelBrand = await this.hotelBrandRepository.preload({
+      id,
+      ...updateHotelBrandDto,
+    });
+
+    return hotelBrand;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} hotelBrand`;
+  async remove(id: number) {
+    await this.findOne(id);
+    return this.hotelBrandRepository.delete(id);
   }
 }
