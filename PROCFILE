@@ -1,0 +1,3 @@
+web: npm run start:prod
+
+npx typeorm -d ormconfig.js migration:run
