@@ -20,7 +20,14 @@ export class HotelBrandsService {
   }
 
   findAll() {
-    return this.hotelBrandRepository.find();
+    return this.hotelBrandRepository.find({
+      order: {
+        name: 'ASC',
+        hotels: {
+          name: 'ASC',
+        },
+      },
+    });
   }
 
   async findOne(id: number) {

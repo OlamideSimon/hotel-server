@@ -18,7 +18,11 @@ export class HotelService {
   }
 
   findAll() {
-    return this.hotelRepository.find();
+    return this.hotelRepository.find({
+      order: {
+        name: 'ASC',
+      },
+    });
   }
 
   async findOne(id: number) {
