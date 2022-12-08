@@ -9,6 +9,6 @@ export class HotelBrand {
   @Column()
   name: string;
 
-  @OneToMany(() => Hotel, (hotel) => hotel.hotelBrand)
+  @OneToMany(() => Hotel, (hotel) => hotel.hotelBrand, { eager: true })
   hotels: Hotel[];
 }
