@@ -18,6 +18,8 @@ export class Hotel {
   @Column()
   address: string;
 
-  @ManyToOne(() => HotelBrand, (hotelBrand) => hotelBrand.hotels)
+  @ManyToOne(() => HotelBrand, (hotelBrand) => hotelBrand.hotels, {
+    cascade: ['insert', 'update'],
+  })
   hotelBrand: HotelBrand;
 }

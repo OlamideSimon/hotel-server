@@ -6,7 +6,7 @@ export class HotelBrand {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   name: string;
 
   @OneToMany(() => Hotel, (hotel) => hotel.hotelBrand, { eager: true })

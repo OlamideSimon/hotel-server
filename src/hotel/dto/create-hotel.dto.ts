@@ -1,4 +1,5 @@
-import { IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
+import { HotelBrand } from 'src/hotel-brands/entities/hotel-brand.entity';
 
 export class CreateHotelDto {
   @IsString()
@@ -12,4 +13,8 @@ export class CreateHotelDto {
 
   @IsString()
   address: string;
+
+  @IsOptional()
+  @IsString()
+  hotelBrand: HotelBrand;
 }

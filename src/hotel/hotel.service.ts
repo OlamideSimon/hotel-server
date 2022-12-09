@@ -42,7 +42,7 @@ export class HotelService {
       ...updateHotelDto,
     });
 
-    return hotel;
+    return this.hotelRepository.save(hotel);
   }
 
   async remove(id: number) {
