@@ -47,7 +47,7 @@ export class HotelBrandsService {
       ...updateHotelBrandDto,
     });
 
-    return hotelBrand;
+    return this.hotelBrandRepository.save(hotelBrand);
   }
 
   async remove(id: number) {
